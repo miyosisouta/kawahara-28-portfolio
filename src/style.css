@@ -463,13 +463,14 @@ body {
   text-decoration: none;
 }
 
-.work-link:hover {
+a.work-link:hover {
   text-decoration: underline;
 }
 
 .work-link.is-disabled {
   color: var(--color-text-sub);
   font-weight: 400;
+  cursor: default;
 }
 
 
