@@ -98,8 +98,8 @@ function platformTagsHtml(work: Work): string {
 // 作品カード1枚を作る
 function workCardHtml(member: Member, work: Work): string {
     const linkHtml = work.pageUrl
-        ? `<a class="work-link" href="${work.pageUrl}" target="_blank" rel="noopener noreferrer">個人サイトで見る ↗</a>`
-        : `<span class="work-link is-disabled">個人サイト準備中</span>`;
+        ? `<a class="work-link" href="${work.pageUrl}" target="_blank" rel="noopener noreferrer">ポートフォリオサイトへ ↗</a>`
+        : `<span class="work-link is-disabled">ポートフォリオサイト準備中</span>`;
 
     return `
     <article class="work-card card">

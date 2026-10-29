@@ -37,6 +37,7 @@ export interface Work { // 「ゲーム作品なら、必ずこの項目があ�
 // メンバーデータ（JSON に書いてある形）：後輩が profile.json に書くもの
 export interface MemberJson {
   name: string;           // 名前(漢字)
+  nameKana: string;       // 名前(ひらがな)
   nameRomaji: string;     // 名前(ローマ字)
   photo: string;          // プロフィール画像
   jobs: Job[];            // 希望職業
@@ -68,7 +69,8 @@ export const members: Member[] = Object.entries(memberFiles)    // パスと中�
   ...member,                                                    // 中身を全部(名前・写真・作品...etc)コピー
   id: path.split("/")[2],                                       // パスを/で切って、2番目のフォルダ名をIDとする
 }))                                                               
-.filter((member) => member.hidden !== true);                    // hiddenの人を除く
+.filter((member) => member.hidden !== true)                     // hiddenの人を除く
+.sort((a, b) => (a.nameKana || a.name).localeCompare(b.nameKana || b.name, "ja")); // ふりがなのあいうえお順に並べる
 
 
 // members フォルダの画像を全部読み込む（キー：画像のパス、値：サイトで使える画像のURL）
