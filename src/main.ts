@@ -12,7 +12,7 @@ const SITE_TITLE = "28卒 ゲーム作品ポートフォリオ";
 ///////////////////////////////////// 画面の入れ物 ////////////////////////////////////////////////////////////
 
 const app = document.querySelector<HTMLDivElement>("#app")!;
-const schoolName = document.querySelector<HTMLSpanElement>(".school-name")!;
+const schoolName = document.querySelector<HTMLImageElement>(".school-name")!;
 const backButton = document.querySelector<HTMLAnchorElement>("#back-button")!;
 
 
