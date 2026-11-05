@@ -1,0 +1,48 @@
+# main ブランチに Push されたら、自動でビルドして GitHub Pages に公開する設定
+name: Deploy static content to Pages
+
+on:
+  # main に Push されたときに動く
+  push:
+    branches: ['main']
+  # GitHub の Actions タブから手動でも動かせる
+  workflow_dispatch:
+
+# GitHub Pages に公開するための権限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同時に2つ公開が走らないようにする
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout  # リポジトリのファイルを取ってくる
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Set up Node  # Node.js を用意する
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: lts/*
+          cache: 'npm'
+      - name: Install dependencies  # npm install と同じ（部品の取り寄せ）
+        run: npm ci
+      - name: Build  # npm run build（公開用に変換）
+        run: npm run build
+      - name: Setup Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
+      - name: Upload artifact  # 変換結果の dist フォルダをアップロード
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: './dist'
+      - name: Deploy to GitHub Pages  # 公開！
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5

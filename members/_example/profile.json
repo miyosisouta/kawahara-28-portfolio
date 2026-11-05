@@ -1,0 +1,35 @@
+{
+  "name": "山田 太郎",
+  "nameKana": "やまだ たろう",
+  "nameRomaji": "Taro Yamada",
+  "photo": "profile.jpg",
+  "jobs": ["グラフィックス", "ツール・エディタ"],
+  "comment": "描画処理を突き詰めるのが好きです",
+  "githubUrl": "https://github.com/yamada-taro",
+  "hobby": { "text": "キャンプ", "photo": "hobby.jpg" },
+  "talent": { "text": "けん玉", "photo": "talent.jpg" },
+  "qa": { "question": "もし宝くじが当たったら？", "answer": "自作エンジン用に最強のPCを組む" },
+  "works": [
+    {
+      "title": "作品タイトルA",
+      "genre": "3Dアクション",
+      "thumbnail": "work-a.jpg",
+      "platforms": ["自作エンジン", "DirectX 12"],
+      "teamSize": 4,
+      "role": "プレイヤー制御、当たり判定",
+      "period": "3か月",
+      "pageUrl": "https://yamada-taro.github.io/work-a/"
+    },
+    {
+      "title": "作品タイトルB",
+      "genre": "パズル",
+      "thumbnail": "work-b.jpg",
+      "platforms": ["Unity"],
+      "teamSize": 1,
+      "role": "",
+      "period": "1か月",
+      "pageUrl": ""
+    }
+  ],
+  "hidden": false
+}

@@ -1,0 +1,25 @@
+{
+    "name": "",
+    "nameKana": "",
+    "nameRomaji": "",
+    "photo": "profile.jpg",
+    "jobs": [],
+    "comment":"",
+    "githubUrl": "",
+    "hobby": { "text": "", "photo": "hobby.jpg" },
+    "talent": { "text": "", "photo": "talent.jpg" },
+    "qa": { "question": "", "answer": "" },
+    "works": [
+        {
+        "title": "",
+        "genre": "",
+        "thumbnail": "",
+        "platforms": [],
+        "teamSize": 1,
+        "role": "",
+        "period": "",
+        "pageUrl": ""
+        }
+    ],
+  "hidden": false
+}

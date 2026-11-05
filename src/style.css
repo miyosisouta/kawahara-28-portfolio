@@ -1,0 +1,492 @@
+:root {
+  --color-accent: #15803D;
+  --color-tag-bg: #DCFCE7;
+  --color-tag-text: #166534;
+  --color-page-bg: #F8FAFC;
+  --color-card-bg: #FFFFFF;
+  --color-text: #0F172A;
+  --color-text-sub: #475569;
+  --color-line: #E2E8F0;
+  --color-button-line: #CBD5E1;
+}
+
+/* すべての要素で、幅に padding と枠線を含めて計算する */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Noto Sans JP", sans-serif;  /* デザインのフォント。読めなければ普通のゴシック */
+  font-size: 15px;                          /* 本文の大きさ */
+  line-height: 1.7;                         /* 行間：文字の大きさの1.7倍 */
+  color: var(--color-text);                 /* 本文の文字色 */
+  background-color: var(--color-page-bg);
+}
+
+/* 中身の幅をそろえる箱（ヘッダーの中と、ページの中身で共通） */
+.container {
+  max-width: 1180px;   /* 最大幅。これより広い画面では、これ以上広がらない */
+  margin: 0 auto;      /* 左右の外側の余白を自動 → 真ん中に寄る */
+  padding: 0 24px;     /* 左右に 24px の内側の余白 */
+}
+
+/* ページの中身の上下の余白 */
+.page {
+  padding-top: 40px;
+  padding-bottom: 64px;
+}
+
+/* ヘッダーの緑の帯 */
+.site-header {
+  background-color: var(--color-accent);
+  color: white;
+  padding: 18px 0;
+}
+
+/* ヘッダーの中身：左右の両端に寄せ、縦は真ん中でそろえる */
+.site-header .container {
+  display: flex;
+  justify-content: space-between;  /* 両端に寄せる */
+  align-items: center;             /* 縦の真ん中でそろえる */
+  gap: 16px;                       /* 狭い画面で近づいたときの最低限のすき間 */
+}
+
+/* 左側のかたまり（ロゴ＋サイト名） */
+.site-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 白い四角のロゴ（仮） */
+.logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: white;
+  color: var(--color-accent);
+  font-weight: 700;
+  display: flex;               /* 中の文字を… */
+  align-items: center;         /* 縦の真ん中に */
+  justify-content: center;     /* 横の真ん中に */
+  flex-shrink: 0;              /* 画面が狭くても縮まない */
+}
+
+/* サイト名 */
+.site-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* 学校名 */
+.school-name {
+  font-size: 14px;
+}
+
+/* ページの見出し「28卒 メンバー一覧」 */
+.page-title {
+  font-size: 32px;
+  line-height: 1.4;
+  margin: 0 0 8px;     /* 上・左右は0、下だけ 8px */
+}
+
+/* 見出しの下の案内文 */
+.page-lead {
+  margin: 0 0 24px;
+  color: var(--color-text-sub);   /* 補足の文字色（少し薄いグレー） */
+}
+
+/* メンバーカードの並び：5列のグリッド */
+.member-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);   /* 同じ幅の列を5つ */
+  gap: 20px;
+}
+
+/* 画面の幅に合わせて列を減らす */
+@media (max-width: 1100px) {
+  .member-list { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 860px) {
+  .member-list { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .member-list { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* メンバーカード */
+.member-card {
+  display: flex;
+  flex-direction: column;          /* 中身を縦に並べる（写真 → 名前…） */
+  padding: 0;
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  background-color: var(--color-card-bg);
+  overflow: hidden;                /* 写真の角を、カードの角丸に合わせて切る */
+  text-align: left;
+  font: inherit;                   /* ボタンの文字をページと同じフォントに */
+  color: inherit;
+  cursor: pointer;
+  box-shadow:
+    6px 8px 18px rgba(15, 23, 42, 0.16),
+    2px 3px 4px rgba(15, 23, 42, 0.10);
+  transition: transform 0.15s;     /* 動きをなめらかに */
+  text-decoration: none;
+}
+
+/* マウスを乗せると少し浮く */
+.member-card:hover {
+  transform: translateY(-3px);
+}
+
+/* 顔写真（3:4） */
+.member-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;             /* 縦横の比率を 3:4 に固定 */
+  object-fit: cover;               /* 比率が違う写真は、はみ出た部分を切る */
+  object-position: center top;     /* 切るときは上（顔）を残す */
+}
+
+/* 写真がないときのグレーの仮置き */
+.photo-placeholder {
+  background-color: var(--color-line);
+}
+
+/* カードの写真より下の部分 */
+.member-body {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 14px 16px;
+}
+
+.member-name {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.member-romaji {
+  font-size: 12px;
+  color: var(--color-text-sub);
+}
+
+/* 「希望職種」などの小さなラベル */
+.label {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--color-text-sub);
+}
+
+/* タグの並び */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+/* 丸いタグ（希望職種） */
+.tag {
+  padding: 2px 10px;
+  border-radius: 999px;            /* 大きな値にすると両端が完全な丸になる */
+  background-color: var(--color-tag-bg);
+  color: var(--color-tag-text);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+/* ========== 共通 ========== */
+
+/* hidden が付いたものは必ず隠す */
+[hidden] {
+  display: none !important;
+}
+
+/* 白いカードの共通の見た目（角丸・線・右下の影） */
+.card {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  box-shadow:
+    6px 8px 18px rgba(15, 23, 42, 0.16),
+    2px 3px 4px rgba(15, 23, 42, 0.10);
+}
+
+/* 誰もいないときのメッセージ */
+.empty-message {
+  grid-column: 1 / -1;
+  color: var(--color-text-sub);
+}
+
+/* ヘッダー右の「← メンバー一覧へ」 */
+.back-button {
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.back-button:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ボタン（GitHub を見る・作品を見る） */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  border: 1px solid var(--color-accent);
+  border-radius: 6px;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn-primary {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+.btn-outline {
+  background-color: var(--color-card-bg);
+  color: var(--color-accent);
+}
+
+
+/* ========== 自己紹介ページ：プロフィール ========== */
+
+.profile-card {
+  display: grid;
+  grid-template-columns: 240px 1fr;   /* 左：写真 240px、右：残り全部 */
+  gap: 32px;
+  padding: 32px;
+}
+
+.profile-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 8px;
+}
+
+.profile-romaji {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-sub);
+}
+
+.profile-name {
+  margin: 0 0 12px;
+  font-size: 32px;
+  line-height: 1.3;
+}
+
+.profile-comment {
+  margin: 16px 0 20px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background-color: var(--color-page-bg);
+}
+
+.profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+
+/* ========== 自己紹介ページ：セクション共通 ========== */
+
+.section {
+  margin-top: 40px;
+}
+
+.section-title {
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--color-accent);
+  font-size: 20px;
+}
+
+#works {
+  scroll-margin-top: 16px;
+}
+
+
+/* ========== 自己紹介ページ：趣味・特技 ========== */
+
+.hobby-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.hobby-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+}
+
+.hobby-photo {
+  display: block;
+  width: 160px;
+  flex-shrink: 0;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.hobby-text {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+
+/* ========== 自己紹介ページ：Q&A ========== */
+
+.qa-card {
+  padding: 20px 24px;
+}
+
+.qa-row {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+}
+
+.qa-row + .qa-row {
+  margin-top: 8px;
+}
+
+.qa-mark {
+  color: var(--color-accent);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.qa-question {
+  font-weight: 500;
+}
+
+
+/* ========== 自己紹介ページ：作品カード ========== */
+
+.work-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.work-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.work-thumbnail {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.work-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 14px 16px 16px;
+}
+
+.work-title {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.work-genre {
+  margin: 2px 0 8px;
+  font-size: 12px;
+  color: var(--color-text-sub);
+}
+
+.platform-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.platform-tag {
+  padding: 0 8px;
+  border: 1px solid var(--color-button-line);
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.platform-tag.is-engine {
+  border-color: var(--color-accent);
+  color: var(--color-tag-text);
+  font-weight: 700;
+}
+
+.work-meta {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-text-sub);
+}
+
+.work-link {
+  margin-top: auto;
+  padding-top: 12px;
+  color: var(--color-accent);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+a.work-link:hover {
+  text-decoration: underline;
+}
+
+.work-link.is-disabled {
+  color: var(--color-text-sub);
+  font-weight: 400;
+  cursor: default;
+}
+
+
+/* ========== 画面が狭いとき ========== */
+
+@media (max-width: 1000px) {
+  .work-list { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 760px) {
+  .work-list { grid-template-columns: repeat(2, 1fr); }
+  .hobby-list { grid-template-columns: 1fr; }
+  .profile-card { grid-template-columns: 1fr; padding: 20px; }
+  .profile-photo { max-width: 240px; }
+}
+
+@media (max-width: 480px) {
+  .work-list { grid-template-columns: 1fr; }
+}
